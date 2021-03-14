@@ -1,9 +1,7 @@
 package com.company;
-import java.io.FileWriter;
+
 import java.io.IOException;
 import java.util.Scanner;
-import com.google.gson.Gson;
-
 
 
 public class ZorgApp {
@@ -12,6 +10,8 @@ public class ZorgApp {
 
     public ZorgApp() {
         exit = false;
+        profilest = new ProfileList();
+        // laad json in copieer data naar profilest
     }
 
     public void runMenu() throws IOException {
@@ -66,23 +66,8 @@ public class ZorgApp {
     }
 
     private void createProfileJson() throws IOException {
-        Gson gson = new Gson();
-        Profile profile = new Profile();
-        profile.SetVoornaam("Hichem");
-        profile.SetAchternaam("Touati");
-        profile.SetLeeftijd(27);
-
-
-        // 1. Java object to JSON file
-        gson.toJson(profile, new FileWriter("/home/hichem/Dropbox/HU-ADSD/S1/ZorgApp/src/test/testfiles/test.json"));
-
-        // 2. Java object to JSON string
-//        String jsonInString = gson.toJson(obj);
-
 
         //TODO export profile to json and profile is an object
-
-
 
 
     }

@@ -8,7 +8,8 @@ public class Profile {
     private double Lengte;
 
     public Profile() {
-
+        Voornaam = "";
+        Achternaam = "";
     }
 
     public Profile(String voornaam, String achternaam) {

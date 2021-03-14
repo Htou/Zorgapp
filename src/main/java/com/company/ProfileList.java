@@ -5,6 +5,9 @@ import java.util.ArrayList;
 public class ProfileList {
     ArrayList<Profile> Collection;
 
+    public ProfileList(){
+        Collection = new ArrayList<Profile>();
+    }
     public void Add(Profile profile) {
         Collection.add(profile);
     }
