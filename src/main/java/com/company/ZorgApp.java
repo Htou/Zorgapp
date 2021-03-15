@@ -5,13 +5,12 @@ import java.util.Scanner;
 
 
 public class ZorgApp {
-    ProfileList profilest;
+    ProfileList profileList;
     boolean exit;
 
     public ZorgApp() {
         exit = false;
-        profilest = new ProfileList();
-        // laad json in copieer data naar profilest
+        // laad json in copieer data naar profileList
     }
 
     public void runMenu() throws IOException {
@@ -58,18 +57,21 @@ public class ZorgApp {
                 exit = true;
                 System.out.println("Bedankt voor het gebruiken van onze applicatie");
             }
-            case 1 -> createProfileJson();
+            case 1 -> test();
             case 2 -> pickShape();
             default -> System.out.println("Er trad een onbekende fout op");
         }
 
     }
 
-    private void createProfileJson() throws IOException {
+    private void test() throws IOException {
+        profileList = JsonReader.loadProfileList();
 
-        //TODO export profile to json and profile is an object
+        Profile profile = new Profile();
+        profile.SetVoornaam("johnny");
+        profileList.Add(profile);
 
-
+        JsonWriter.saveProfileList(profileList);
     }
 
     private void pickShape() {
