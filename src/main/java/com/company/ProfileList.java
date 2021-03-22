@@ -3,25 +3,25 @@ package com.company;
 import java.util.ArrayList;
 
 public class ProfileList {
-    ArrayList<Profile> Collection;
+    ArrayList<Profile> collection;
 
     public ProfileList() {
-        Collection = new ArrayList<Profile>();
+        collection = new ArrayList<Profile>();
     }
 
-    public void Add(Profile profile) {
-        Collection.add(profile);
+    public void add(Profile profile) {
+        collection.add(profile);
     }
 
-    public Profile Get(int index) {
-        return Collection.get(index);
+    public Profile get(int index) {
+        return collection.get(index);
     }
 
-    public void Remove(int index) {
-        Collection.remove(index);
+    public void remove(int index) {
+        collection.remove(index);
     }
 
-    public int SizeOf() {
-        return Collection.size();
+    public int sizeOf() {
+        return collection.size();
     }
 }

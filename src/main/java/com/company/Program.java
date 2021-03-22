@@ -4,12 +4,9 @@ import java.io.IOException;
 
 public class Program {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         // write your code here
         ZorgApp menu = new ZorgApp();
-        menu.runMenu();
-
-//        Profile p = new Profile("hICHEM" , "tOUATI", 27,75, 1.80);
-//        System.out.println(p.GetVoornaam());
+        menu.runMainMenu();
     }
 }

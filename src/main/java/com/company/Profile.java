@@ -1,74 +1,79 @@
 package com.company;
 
 public class Profile {
-    private String Voornaam;
-    private String Achternaam;
-    private int Leeftijd;
-    private double Gewicht;
-    private double Lengte;
+    private String voornaam;
+    private String achternaam;
+    private int leeftijd;
+    private double gewicht;
+    private double lengte;
+    private MedicineList medicijnlijst;
 
     public Profile() {
-        Voornaam = "";
-        Achternaam = "";
+        voornaam = "";
+        achternaam = "";
+        medicijnlijst = new MedicineList();
     }
 
-    public Profile(String voornaam, String achternaam) {
-        Voornaam = voornaam;
-        Achternaam = achternaam;
+//    public Profile(String voornaam, String achternaam) {
+//        this.voornaam = voornaam;
+//        this.achternaam = achternaam;
+//    }
+//
+//    public Profile(String voornaam, String achternaam, int leeftijd, double gewicht, double lengte) {
+//        this.voornaam = voornaam;
+//        this.achternaam = achternaam;
+//        this.leeftijd = leeftijd;
+//        this.gewicht = gewicht;
+//        this.lengte = lengte;
+//    }
+
+    public String getVoornaam() {
+        return voornaam;
     }
 
-    public Profile(String voornaam, String achternaam, int leeftijd, double gewicht, double lengte) {
-        Voornaam = voornaam;
-        Achternaam = achternaam;
-        Leeftijd = leeftijd;
-        Gewicht = gewicht;
-        Lengte = lengte;
+    public void setVoornaam(String voornaam) {
+        this.voornaam = voornaam;
     }
 
-    public String GetVoornaam() {
-        return Voornaam;
+    public String getAchternaam() {
+        return achternaam;
     }
 
-    public void SetVoornaam(String voornaam) {
-        Voornaam = voornaam;
+    public void setAchternaam(String achternaam) {
+        this.achternaam = achternaam;
     }
 
-    public String GetAchternaam() {
-        return Achternaam;
+    public double getGewicht() {
+        return gewicht;
     }
 
-    public void SetAchternaam(String achternaam) {
-        Achternaam = achternaam;
+    public void setGewicht(double gewicht) {
+        this.gewicht = gewicht;
     }
 
-    public double GetGewicht() {
-        return Gewicht;
+    public double getLengte() {
+        return lengte;
     }
 
-    public void SetGewicht(double gewicht) {
-        Gewicht = gewicht;
+    public void setLengte(double lengte) {
+        this.lengte = lengte;
     }
 
-    public double GetLengte() {
-        return Lengte;
+    public int getLeeftijd() {
+        return leeftijd;
     }
 
-    public void SetLengte(double lengte) {
-        Lengte = lengte;
+    public void setLeeftijd(int leeftijd) {
+        this.leeftijd = leeftijd;
     }
 
-    public int GetLeeftijd() {
-        return Leeftijd;
+    public MedicineList getMedicijnlijst() {
+        return medicijnlijst;
     }
 
-    public void SetLeeftijd(int leeftijd) {
-        Leeftijd = leeftijd;
-    }
-
-    public double GetBmi(double gewicht, double lengte) {
+    public String getBmi() {
         double bmi;
-        bmi = (gewicht / (Math.pow(lengte, 2)));
-        return bmi;
+        bmi = (getGewicht() / (Math.pow(getLengte(), 2)));
+        return String.format("%.1f", bmi);
     }
-
 }
