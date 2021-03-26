@@ -10,7 +10,7 @@ public class DataHandler {
     public static ProfileList loadProfileList() throws IOException {
 
         Gson gson = new Gson();
-        Reader reader = new FileReader("src/main/java/com/company/Data.json");
+        Reader reader = new FileReader("src/main/java/com/company/ProfileData.json");
 
         ProfileList profileList = gson.fromJson(reader, ProfileList.class);
 
@@ -19,8 +19,20 @@ public class DataHandler {
 
     }
 
+    public static MedicineList loadMedicineList() throws IOException {
+
+        Gson gson = new Gson();
+        Reader reader = new FileReader("src/main/java/com/company/MedicineData.json");
+
+        MedicineList medicineList = gson.fromJson(reader, MedicineList.class);
+
+        reader.close();
+        return medicineList;
+
+    }
+
     public static void saveProfileList(ProfileList profileList) throws IOException {
-        Writer writer = new FileWriter("src/main/java/com/company/Data.json");
+        Writer writer = new FileWriter("src/main/java/com/company/ProfileData.json");
         Gson gson = new Gson();
         // 1. Java object to JSON file
         gson.toJson(profileList, writer);

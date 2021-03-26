@@ -1,0 +1,40 @@
+{
+  "medicijn": [
+    {
+      "naam": "Altretamine",
+      "beschrijving": "Altretamine is een antineoplastisch middel. Het werd in 1990 goedgekeurd door de Amerikaanse FDA."
+    },
+    {
+      "naam": "Amiodarone",
+      "beschrijving": "Amiodaron laat het hart langzamer en regelmatiger kloppen."
+    },
+    {
+      "naam": "Amitriptyline tablet",
+      "beschrijving": "Amitriptyline verbetert uw stemming en maakt u minder angstig. Hierdoor heeft u minder last van klachten als piekeren, slaapproblemen en prikkelbaarheid. Ook werkt amitriptyline tegen pijnklachten."
+    },
+    {
+      "naam": "Citalopram",
+      "beschrijving": "Citalopram verbetert de stemming en vermindert angsten en angstverschijnselen (zoals piekeren, slaapproblemen, prikkelbaarheid en trillen. Het vertraagt ook de zaadlozing."
+    },
+    {
+      "naam": "Fluoxetine",
+      "beschrijving": "Fluoxetine verbetert uw stemming en vermindert angsten en angstverschijnselen (zoals piekeren, slaapproblemen, prikkelbaarheid en trillen)."
+    },
+    {
+      "naam": "Fuvoxamine",
+      "beschrijving": "Fluoxetine verbetert de stemming en vermindert angsten en angstverschijnselen (zoals piekeren, slaapproblemen, prikkelbaarheid en trillen)."
+    },
+    {
+      "naam": "Paroxetine",
+      "beschrijving": "Paroxetine verbetert uw stemming en maakt u minder angstig. Het vertraagt ook de zaadlozing."
+    },
+    {
+      "naam": "Sertraline",
+      "beschrijving": "Sertraline verbetert uw stemming en maakt u minder angstig. Hierdoor heeft u minder last van piekeren, slaapproblemen, prikkelbaarheid en trillen. Ook vertraagt sertraline de zaadlozing."
+    },
+    {
+      "naam": "Vortioxetine",
+      "beschrijving": "Vortioxetine verbetert de stemming."
+    }
+  ]
+}
