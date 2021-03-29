@@ -39,6 +39,7 @@ public class DataHandler {
         writer.flush(); //flush data to file   <---
     }
 
+
 //    public static void createUserProfile() throws IOException {
 //        //ProfileList profileList = DataHandler.loadProfileList();
 //        ProfileList profileList = new ProfileList();
@@ -50,6 +51,11 @@ public class DataHandler {
 //        Medicine med = new Medicine();
 //        profile.getMedicijnlijst().add(med);
 //        profile.getMedicijnlijst().add(med);
+//        WeightEntry gewichtEntry = new WeightEntry();
+//        gewichtEntry.setGewicht(10.5);
+//        gewichtEntry.setData(LocalDate.now());
+//        profile.getGewichtenlijst().add(gewichtEntry);
+//
 //        profileList.add(profile);
 //
 //        DataHandler.saveProfileList(profileList);

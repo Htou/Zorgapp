@@ -1,16 +1,20 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Profile {
     private String voornaam;
     private String achternaam;
     private int leeftijd;
     private double gewicht;
+    private WeightList gewichtenlijst;
     private double lengte;
     private MedicineList medicijnlijst;
 
     public Profile() {
         voornaam = "";
         achternaam = "";
+        gewichtenlijst = new WeightList();
         medicijnlijst = new MedicineList();
     }
 
@@ -65,6 +69,10 @@ public class Profile {
 
     public void setLeeftijd(int leeftijd) {
         this.leeftijd = leeftijd;
+    }
+
+    public WeightList getGewichtenlijst() {
+        return gewichtenlijst;
     }
 
     public MedicineList getMedicijnlijst() {

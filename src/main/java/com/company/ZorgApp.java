@@ -1,11 +1,15 @@
 package com.company;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class ZorgApp {
     ProfileList profileList;
     MedicineList medicineList;
+    WeightEntry weightEntry;
+
     boolean exit;
 
     int choice;
@@ -17,6 +21,8 @@ public class ZorgApp {
     public ZorgApp() throws IOException {
         profileList = DataHandler.loadProfileList();
         medicineList = DataHandler.loadMedicineList();
+        weightEntry = new WeightEntry();
+
 
         exit = false;
         choice = -1;
@@ -165,6 +171,7 @@ public class ZorgApp {
     private void runPatientProfileMenu() throws IOException, InterruptedException {
         while (!exit) {
             printPatientProfile();
+            displayWeightGraph();
             printPatientProfileMenu();
             choice = getPatientProfileMenuInput();
             preformPatientProfileMenuAction(choice);
@@ -182,8 +189,14 @@ public class ZorgApp {
         System.out.println("Voornaam:" + " " + profile.getVoornaam());
         System.out.println("Achternaam:" + " " + profile.getAchternaam());
         System.out.println("Leeftijd:" + " " + profile.getLeeftijd());
-        System.out.println("Gewicht:" + " " + profile.getGewicht() + "kg");
-        System.out.println("lengte:" + " " + profile.getLengte() + "m");
+        System.out.println("Hudige gewicht:" + " " + profile.getGewicht() + "kg");
+        System.out.print("gewichtengeschiedenis: ");
+
+        for (int i = 0; i <profile.getGewichtenlijst().sizeOf(); i++) {
+            System.out.print("["+profile.getGewichtenlijst().get(i).getData() + ": " + profile.getGewichtenlijst().get(i).getGewicht()+"kg] ");
+        }
+
+        System.out.println("\nlengte:" + " " + profile.getLengte() + "m");
         System.out.println("BMI:" + " " + profile.getBmi());
         System.out.println("\nMedicijnvoorschrift:");
 
@@ -199,6 +212,37 @@ public class ZorgApp {
         System.out.println("2) Medicijnvoorschrift bewerken");
         System.out.println("3) Ga terug naar zorgverlenermenu");
         System.out.println("0) Zorgapp uitschakelen");
+    }
+
+    private void displayWeightGraph() {
+        int profileIndex = profileChoice - 1;
+
+        Profile profile = profileList.get(profileIndex);
+
+        System.out.println("\nGrafiek: gewichtenlijst");
+        for (int i = 0; i < profile.getGewichtenlijst().sizeOf(); i++) {
+            double weight = profile.getGewichtenlijst().get(i).getGewicht();  //get weight
+            //String date = profile.getGewichtenlijst().get(i).getData();      // get date
+
+            int loop = (int) (weight / 4);
+
+            if (loop > 60) {
+                loop = 60;
+            } //set loop to 60 if over 60
+
+            //print out enters
+            if (i != 0) {
+                System.out.println();
+            }
+
+            //print out menu
+
+            //System.out.print("[" + (date) + "]" + weight + "kg \t");
+            System.out.print(profile.getGewichtenlijst().get(i).getData() + ": " + weight + "kg \t");
+            IntStream.range(1, loop).forEach(s -> System.out.print("█")); // print out bar
+
+        }
+        System.out.println(" ");
     }
 
     private int getPatientProfileMenuInput() {
@@ -248,12 +292,11 @@ public class ZorgApp {
         System.out.println("1) Bewerk voornaam:" + " " + profile.getVoornaam());
         System.out.println("2) Bewerk achternaam:" + " " + profile.getAchternaam());
         System.out.println("3) Bewerk leeftijd:" + " " + profile.getLeeftijd());
-        System.out.println("4) Bewerk gewicht:" + " " + profile.getGewicht() + "kg");
+        System.out.println("4) Voeg een gewicht toe, huidig gewicht:" + profile.getGewicht() + "kg");
         System.out.println("5) Bewerk lengte:" + " " + profile.getLengte() + "m");
         System.out.println("****************************************************");
-        System.out.println("6) Ga terug naar zorgverlenermenu");
+        System.out.println("6) Ga terug naar patientenprofiel");
         System.out.println("0) Zorgapp uitschakelen");
-
     }
 
     private int getPatientProfileEditorMenuInput() {
@@ -326,11 +369,18 @@ public class ZorgApp {
         profileList.get(profileIndex).setLeeftijd(leeftijd);
     }
 
-    private void runSetGewicht() {
-        System.out.println("Vul gewicht van patient in kilogram (voorbeeld: 65.50):");
+    private void runAddGewicht() {
         profileIndex = profileChoice - 1;
+        Profile profile = profileList.get(profileIndex);
+
+        System.out.println("Vul gewicht van patient in kilogram (voorbeeld: 65.53):");
         double gewicht = getDoubleInput();
-        profileList.get(profileIndex).setGewicht(gewicht);
+
+
+        weightEntry.setGewicht(gewicht);
+        weightEntry.setData(LocalDate.now());
+        profile.setGewicht(gewicht);
+        profile.getGewichtenlijst().add(weightEntry);
     }
 
 
@@ -361,7 +411,7 @@ public class ZorgApp {
                 return true;
             }
             case 4 -> {
-                runSetGewicht();
+                runAddGewicht();
                 return true;
             }
             case 5 -> {
@@ -369,7 +419,7 @@ public class ZorgApp {
                 return true;
             }
             case 6 -> {
-                runZorgverlenerMenu();
+                runPatientProfileMenu();
                 return false;
             }
             default -> {
@@ -415,7 +465,7 @@ public class ZorgApp {
         System.out.println("1) Voeg een medicijn toe");
         System.out.println("2) Bewerk medicijnhoeveelheid (mg)");
         System.out.println("3) Verwijder een medicijn");
-        System.out.println("4) Ga terug naar zorgverlenermenu");
+        System.out.println("4) Ga terug naar patientenprofiel");
         System.out.println("0) Zorgapp uitschakelen");
     }
 
@@ -594,7 +644,7 @@ public class ZorgApp {
                 return true;
             }
             case 4 -> {
-                runZorgverlenerMenu();
+                runPatientProfileMenu();
                 return false;
             }
             default -> {
@@ -700,6 +750,7 @@ public class ZorgApp {
     private void runCareRecipientProfileMenu() throws IOException, InterruptedException {
         while (!exit) {
             printPatientProfile();
+            displayWeightGraph();
             printCareRecipientProfileMenu();
             choice = getCareRecipientProfileMenuInput();
             boolean dataWritten = preformCareRecipientProfileMenuAction();
