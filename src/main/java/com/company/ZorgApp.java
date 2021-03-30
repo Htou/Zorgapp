@@ -6,17 +6,17 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class ZorgApp {
-    ProfileList profileList;
-    MedicineList medicineList;
-    WeightEntry weightEntry;
+    private ProfileList profileList;
+    private MedicineList medicineList;
+    private WeightEntry weightEntry;
 
-    boolean exit;
+    private boolean exit;
 
-    int choice;
-    int profileChoice;
-    int profileIndex;
-    int medicineChoice;
-    int medicineIndex;
+    private int choice;
+    private int profileChoice;
+    private int profileIndex;
+    private int medicineChoice;
+    private int medicineIndex;
 
     public ZorgApp() throws IOException {
         profileList = DataHandler.loadProfileList();
