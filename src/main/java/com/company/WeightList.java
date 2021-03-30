@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 
 public class WeightList {
-    ArrayList<WeightEntry> gewichtenEntry;
+    private ArrayList<WeightEntry> gewichtenEntry;
 
     public WeightList() {
         gewichtenEntry = new ArrayList<WeightEntry>();

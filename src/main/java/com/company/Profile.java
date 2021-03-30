@@ -1,6 +1,5 @@
 package com.company;
 
-import java.util.ArrayList;
 
 public class Profile {
     private String voornaam;

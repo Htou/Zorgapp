@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 
 public class ProfileList {
-    ArrayList<Profile> collection;
+   private ArrayList<Profile> collection;
 
     public ProfileList() {
         collection = new ArrayList<Profile>();

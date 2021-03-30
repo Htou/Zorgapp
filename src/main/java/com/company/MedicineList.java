@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 
 public class MedicineList {
-    ArrayList<Medicine> medicijn;
+    private ArrayList<Medicine> medicijn;
 
     public MedicineList() {
         medicijn = new ArrayList<Medicine>();

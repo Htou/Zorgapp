@@ -11,6 +11,7 @@ public class ZorgApp {
     private WeightEntry weightEntry;
 
     private boolean exit;
+    private boolean englishLanguage;
 
     private int choice;
     private int profileChoice;
@@ -18,11 +19,11 @@ public class ZorgApp {
     private int medicineChoice;
     private int medicineIndex;
 
+
     public ZorgApp() throws IOException {
         profileList = DataHandler.loadProfileList();
         medicineList = DataHandler.loadMedicineList();
         weightEntry = new WeightEntry();
-
 
         exit = false;
         choice = -1;
@@ -30,6 +31,7 @@ public class ZorgApp {
         profileIndex = profileChoice - 1;
         medicineChoice = -1;
         medicineIndex = medicineChoice - 1;
+        englishLanguage = false;
     }
 
     private void clearScreen() {
@@ -38,12 +40,79 @@ public class ZorgApp {
     }
 
     private void unknownError() {
-        System.out.println("Er trad een onbekende fout op");
+        if (englishLanguage == true) {
+            System.out.println("An unknown error has occured");
+        } else {
+            System.out.println("Er trad een onbekende fout op");
+        }
     }
 
     private void exitZorgapp() {
         exit = true;
-        System.out.println("Bedankt voor het gebruiken van onze applicatie");
+        if (englishLanguage == true) {
+            System.out.println("Thanks for using our Zorgapp");
+        } else {
+            System.out.println("Bedankt voor het gebruiken van onze Zorgapp");
+        }
+    }
+
+    /*
+     * Choose language menu stack.
+     */
+    public void runLanguageMenu() throws IOException, InterruptedException {
+        printLanguageHeader();
+        while (!exit) {
+            printLanguageMenu();
+            choice = getLanguageMenuInput();
+            preformLanguageMenuAction();
+        }
+    }
+
+    private void printLanguageHeader() {
+        System.out.println("+------------------------------------------------+");
+        System.out.println("|            Welkom bij  / Welcome to            |");
+        System.out.println("|            de Zorgapp /  the Zorgapp           |");
+        System.out.println("+------------------------------------------------+");
+
+    }
+
+    private void printLanguageMenu() {
+        System.out.println("\nKies een taal / Choose a language:");
+        System.out.println("1) Nederlands");
+        System.out.println("2) English");
+        System.out.println("0) Zorgapp uitschakelen / Exit Zorgapp");
+    }
+
+    private int getLanguageMenuInput() {
+        Scanner kb = new Scanner(System.in);
+        choice = -1;
+
+        while (choice < 0 || choice > 2) {
+            try {
+                System.out.println("\nKies een nummer uit de lijst / Choose a number from the list: ");
+                choice = Integer.parseInt(kb.nextLine());
+
+            } catch (NumberFormatException e) {
+                System.out.println("Verkeerde invoer, kies een nummer uit de lijst. / Wrong input, choose a number from the list:");
+            }
+        }
+        return choice;
+    }
+
+    private void preformLanguageMenuAction() throws IOException, InterruptedException {
+        switch (choice) {
+            case 0 -> exitZorgapp();
+            case 1 -> {
+                englishLanguage = false;
+                runMainMenu();
+            }
+            case 2 -> {
+                englishLanguage = true;
+                runMainMenu();
+            }
+            default -> unknownError();
+        }
+
     }
 
 
@@ -60,17 +129,34 @@ public class ZorgApp {
     }
 
     private void printHeader() {
-        System.out.println("+-----------------------------------+");
-        System.out.println("|            Welkom bij             |");
-        System.out.println("|            de Zorgapp             |");
-        System.out.println("+-----------------------------------+");
+        if (englishLanguage == true) {
+            System.out.println("+-----------------------------------+");
+            System.out.println("|            welcome to             |");
+            System.out.println("|            the Zorgapp            |");
+            System.out.println("+-----------------------------------+");
+
+        } else {
+            System.out.println("+-----------------------------------+");
+            System.out.println("|            Welkom bij             |");
+            System.out.println("|            de Zorgapp             |");
+            System.out.println("+-----------------------------------+");
+        }
     }
 
+
     private void printMainMenu() {
-        System.out.println("\nLogin: Kies een gebruiker");
-        System.out.println("1) Inloggen Zorgverlener");
-        System.out.println("2) Inloggen als Patient");
-        System.out.println("0) Zorgapp uitschakelen");
+        if (englishLanguage == true) {
+            System.out.println("\nLoginScreen: Choose an user");
+            System.out.println("1) Login as caregiver");
+            System.out.println("2) Login as patient");
+            System.out.println("0) Exit Zorgapp");
+        } else {
+            System.out.println("\nLogin: Kies een gebruiker");
+            System.out.println("1) Inloggen als zorgverlener");
+            System.out.println("2) Inloggen als patient");
+            System.out.println("0) Zorgapp uitschakelen");
+        }
+
     }
 
     private int getMainMenuInput() {
@@ -79,11 +165,19 @@ public class ZorgApp {
 
         while (choice < 0 || choice > 2) {
             try {
-                System.out.println("\nKies een nummer uit de lijst: ");
+                if (englishLanguage == true) {
+                    System.out.println("\nChoose a number from the list");
+                } else {
+                    System.out.println("\nKies een nummer uit de lijst: ");
+                }
                 choice = Integer.parseInt(kb.nextLine());
 
             } catch (NumberFormatException e) {
-                System.out.println("Verkeerde invoer. Kies een nummer uit de lijst");
+                if (englishLanguage == true) {
+                    System.out.println("Wrong Input, choose a number from the list");
+                } else {
+                    System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
+                }
             }
         }
         return choice;
@@ -112,10 +206,19 @@ public class ZorgApp {
 
     private void printZorgverlenerMenu() {
         clearScreen();
-        System.out.println("\nGebruiker: Zorgverlener");
-        System.out.println("1) Geef patientenlijst weer");
-        System.out.println("2) Ga terug");
-        System.out.println("0) Zorgapp uitschakelen");
+        if (englishLanguage == true) {
+            System.out.println("\nUser: Caregiver");
+            System.out.println("1) Show patient list");
+            System.out.println("2) Go back");
+            System.out.println("0) Exit zorgapp");
+        } else {
+            System.out.println("\nGebruiker: Zorgverlener");
+            System.out.println("1) Geef patientenlijst weer");
+            System.out.println("2) Ga terug");
+            System.out.println("0) Zorgapp uitschakelen");
+        }
+
+
     }
 
     private void preformZorgverlenerMenuAction() throws IOException, InterruptedException {
@@ -137,7 +240,11 @@ public class ZorgApp {
 
     private void printPatientListMenu() {
         clearScreen();
-        System.out.println("Patientenlijst:");
+        if (englishLanguage == true) {
+            System.out.println("Patient list:");
+        } else {
+            System.out.println("Patientenlijst:");
+        }
 
         for (int i = 0; i < profileList.sizeOf(); i++) {
             Profile profile = profileList.get(i);
@@ -150,11 +257,20 @@ public class ZorgApp {
         choice = -1;
         while (choice < 1 || choice > profileList.sizeOf()) {
             try {
-                System.out.println("\nVoer een patientnummer uit de lijst in om de desbetreffende patient weer te geven: ");
+                if (englishLanguage == true) {
+                    System.out.println("\nInput a patient number from the list to show its patient profile: ");
+                } else {
+                    System.out.println("\nVoer een patientnummer uit de lijst in om de desbetreffende patient weer te geven: ");
+                }
+
                 choice = Integer.parseInt(kb.nextLine());
 
             } catch (NumberFormatException e) {
-                System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
+                if (englishLanguage == true) {
+                    System.out.println("Wrong ingput, choose a number from the list");
+                } else {
+                    System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
+                }
             }
         }
         return choice;
@@ -164,7 +280,11 @@ public class ZorgApp {
         if (profileChoice >= 0 || profileChoice <= profileList.sizeOf()) {
             runPatientProfileMenu();
         } else {
-            System.out.println("Verkeerde invoer, kies een patientnummer uit de lijst");
+            if (englishLanguage == true) {
+                System.out.println("Wrong input, choose a number from a list");
+            } else {
+                System.out.println("Verkeerde invoer, kies een patientnummer uit de lijst");
+            }
         }
     }
 
@@ -179,26 +299,41 @@ public class ZorgApp {
     }
 
     private void printPatientProfile() {
-        clearScreen();
         int profileIndex = profileChoice - 1;
 
         Profile profile = profileList.get(profileIndex);
         MedicineList medicineList = profile.getMedicijnlijst();
 
-        System.out.println("Patientenprofiel:");
-        System.out.println("Voornaam:" + " " + profile.getVoornaam());
-        System.out.println("Achternaam:" + " " + profile.getAchternaam());
-        System.out.println("Leeftijd:" + " " + profile.getLeeftijd());
-        System.out.println("Hudige gewicht:" + " " + profile.getGewicht() + "kg");
-        System.out.print("gewichtengeschiedenis: ");
-
-        for (int i = 0; i <profile.getGewichtenlijst().sizeOf(); i++) {
-            System.out.print("["+profile.getGewichtenlijst().get(i).getData() + ": " + profile.getGewichtenlijst().get(i).getGewicht()+"kg] ");
+        if (englishLanguage == true) {
+            System.out.println("Patient profile:");
+            System.out.println("First Name:" + " " + profile.getVoornaam());
+            System.out.println("Last Name:" + " " + profile.getAchternaam());
+            System.out.println("Age:" + " " + profile.getLeeftijd());
+            System.out.println("Current weight:" + " " + profile.getGewicht() + "kg");
+            System.out.print("Weight history: ");
+        } else {
+            System.out.println("Patientenprofiel:");
+            System.out.println("Voornaam:" + " " + profile.getVoornaam());
+            System.out.println("Achternaam:" + " " + profile.getAchternaam());
+            System.out.println("Leeftijd:" + " " + profile.getLeeftijd());
+            System.out.println("Hudige gewicht:" + " " + profile.getGewicht() + "kg");
+            System.out.print("gewichtengeschiedenis: ");
         }
 
-        System.out.println("\nlengte:" + " " + profile.getLengte() + "m");
-        System.out.println("BMI:" + " " + profile.getBmi());
-        System.out.println("\nMedicijnvoorschrift:");
+
+        for (int i = 0; i < profile.getGewichtenlijst().sizeOf(); i++) {
+            System.out.print("[" + profile.getGewichtenlijst().get(i).getData() + ": " + profile.getGewichtenlijst().get(i).getGewicht() + "kg] ");
+        }
+
+        if (englishLanguage == true) {
+            System.out.println("\nLength:" + " " + profile.getLengte() + "m");
+            System.out.println("BMI:" + " " + profile.getBmi());
+            System.out.println("\nMedicine prescription:");
+        } else {
+            System.out.println("\nlengte:" + " " + profile.getLengte() + "m");
+            System.out.println("BMI:" + " " + profile.getBmi());
+            System.out.println("\nMedicijnvoorschrift:");
+        }
 
         for (int i = 0; i < profile.getMedicijnlijst().sizeOf(); i++) {
             System.out.println(medicineList.get(i).getNaam() + " " + medicineList.get(i).getMg() + "mg");
@@ -206,12 +341,18 @@ public class ZorgApp {
     }
 
     private void printPatientProfileMenu() {
-        clearScreen();
+        if (englishLanguage == true) {
+            System.out.println("\n1) Edit patient records");
+            System.out.println("2) Show/edit medicine prescription");
+            System.out.println("3) Go back to the Caregiver menu");
+            System.out.println("0) Exit Zorgapp");
+        } else {
+            System.out.println("\n1) Patientgegevens bewerken");
+            System.out.println("2) Medicijnvoorschrift weergeven/bewerken");
+            System.out.println("3) Ga terug naar zorgverlenermenu");
+            System.out.println("0) Zorgapp uitschakelen");
+        }
 
-        System.out.println("\n1) Patientgegevens bewerken");
-        System.out.println("2) Medicijnvoorschrift bewerken");
-        System.out.println("3) Ga terug naar zorgverlenermenu");
-        System.out.println("0) Zorgapp uitschakelen");
     }
 
     private void displayWeightGraph() {
@@ -219,10 +360,14 @@ public class ZorgApp {
 
         Profile profile = profileList.get(profileIndex);
 
-        System.out.println("\nGrafiek: gewichtenlijst");
+        if (englishLanguage == true) {
+            System.out.println("\nGraph: WeighHistory");
+        } else {
+            System.out.println("\nGrafiek: gewichtenlijst");
+        }
+
         for (int i = 0; i < profile.getGewichtenlijst().sizeOf(); i++) {
-            double weight = profile.getGewichtenlijst().get(i).getGewicht();  //get weight
-            //String date = profile.getGewichtenlijst().get(i).getData();      // get date
+            double weight = profile.getGewichtenlijst().get(i).getGewicht();
 
             int loop = (int) (weight / 4);
 
@@ -250,11 +395,20 @@ public class ZorgApp {
         choice = -1;
         while (choice < 0 || choice > 3) {
             try {
-                System.out.println("\nKies een nummer uit de lijst: ");
+                if (englishLanguage == true) {
+                    System.out.println("\nChoose a number from a list");
+                } else {
+                    System.out.println("\nKies een nummer uit de lijst: ");
+                }
+
                 choice = Integer.parseInt(kb.nextLine());
 
             } catch (NumberFormatException e) {
-                System.out.println("Verkeerde invoer. Kies een nummer uit de lijst");
+                if (englishLanguage == true) {
+                    System.out.println("Wrong input, choose a number from the list");
+                } else {
+                    System.out.println("Verkeerde invoer, Kies een nummer uit de lijst");
+                }
             }
         }
         return choice;
@@ -288,15 +442,27 @@ public class ZorgApp {
 
         Profile profile = profileList.get(profileIndex);
 
-        System.out.println("Patientenprofiel bewerken:");
-        System.out.println("1) Bewerk voornaam:" + " " + profile.getVoornaam());
-        System.out.println("2) Bewerk achternaam:" + " " + profile.getAchternaam());
-        System.out.println("3) Bewerk leeftijd:" + " " + profile.getLeeftijd());
-        System.out.println("4) Voeg een gewicht toe, huidig gewicht:" + profile.getGewicht() + "kg");
-        System.out.println("5) Bewerk lengte:" + " " + profile.getLengte() + "m");
-        System.out.println("****************************************************");
-        System.out.println("6) Ga terug naar patientenprofiel");
-        System.out.println("0) Zorgapp uitschakelen");
+        if (englishLanguage == true) {
+            System.out.println("Edit Patient profile:");
+            System.out.println("1) Edit first name:" + " " + profile.getVoornaam());
+            System.out.println("2) Edit last name:" + " " + profile.getAchternaam());
+            System.out.println("3) Edit Age:" + " " + profile.getLeeftijd());
+            System.out.println("4) Add a new weight, current weight:" + profile.getGewicht() + "kg");
+            System.out.println("5) Edit length:" + " " + profile.getLengte() + "m");
+            System.out.println("+-----------------------------------------------------+");
+            System.out.println("6) Go back to patient profile");
+            System.out.println("0) Exit zorgapp");
+        } else {
+            System.out.println("Patientenprofiel bewerken:");
+            System.out.println("1) Bewerk voornaam:" + " " + profile.getVoornaam());
+            System.out.println("2) Bewerk achternaam:" + " " + profile.getAchternaam());
+            System.out.println("3) Bewerk leeftijd:" + " " + profile.getLeeftijd());
+            System.out.println("4) Voeg een gewicht toe, huidig gewicht:" + profile.getGewicht() + "kg");
+            System.out.println("5) Bewerk lengte:" + " " + profile.getLengte() + "m");
+            System.out.println("+-----------------------------------------------------+");
+            System.out.println("6) Ga terug naar patientenprofiel");
+            System.out.println("0) Zorgapp uitschakelen");
+        }
     }
 
     private int getPatientProfileEditorMenuInput() {
@@ -304,11 +470,20 @@ public class ZorgApp {
         choice = -1;
         while (choice < 0 || choice > 6) {
             try {
-                System.out.println("\nKies een nummer uit de lijst: ");
+                if (englishLanguage == true) {
+                    System.out.println("\nChoose a number from the list");
+                } else {
+                    System.out.println("\nKies een nummer uit de lijst: ");
+                }
+
                 choice = Integer.parseInt(kb.nextLine());
 
             } catch (NumberFormatException e) {
-                System.out.println("Verkeerde invoer. Kies een nummer uit de lijst");
+                if (englishLanguage == true) {
+                    System.out.println("Wrong input, choose a number from te list");
+                } else {
+                    System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
+                }
             }
         }
         return choice;
@@ -350,21 +525,39 @@ public class ZorgApp {
 
     private void runSetVoornaam() {
         profileIndex = profileChoice - 1;
-        System.out.println("Vul voornaam van patient in:");
+
+        if (englishLanguage = true) {
+            System.out.println("Input the first name of the patient");
+        } else {
+            System.out.println("Vul voornaam van patient in:");
+        }
+
         String voornaam = getStringInput();
         profileList.get(profileIndex).setVoornaam(voornaam);
     }
 
     private void runSetActernaam() {
-        System.out.println("Vul achternaam van patient in:");
         profileIndex = profileChoice - 1;
+
+        if (englishLanguage == true) {
+            System.out.println("Input the last name of the patient");
+        } else {
+            System.out.println("Vul achternaam van patient in:");
+        }
+
         String achternaam = getStringInput();
         profileList.get(profileIndex).setAchternaam(achternaam);
     }
 
     private void runSetLeeftijd() {
-        System.out.println("Vul leeftijd van patient in:");
         profileIndex = profileChoice - 1;
+
+        if (englishLanguage == true) {
+            System.out.println("Input the age of the patient");
+        } else {
+            System.out.println("Vul leeftijd van patient in:");
+        }
+
         int leeftijd = getIntegerInput();
         profileList.get(profileIndex).setLeeftijd(leeftijd);
     }
@@ -373,9 +566,13 @@ public class ZorgApp {
         profileIndex = profileChoice - 1;
         Profile profile = profileList.get(profileIndex);
 
-        System.out.println("Vul gewicht van patient in kilogram (voorbeeld: 65.53):");
-        double gewicht = getDoubleInput();
+        if (englishLanguage == true) {
+            System.out.println("Input the weight of the patient in kilograms (example: 65.43)");
+        } else {
+            System.out.println("Vul gewicht van patient in kilograms (voorbeeld: 65.53):");
+        }
 
+        double gewicht = getDoubleInput();
 
         weightEntry.setGewicht(gewicht);
         weightEntry.setData(LocalDate.now());
@@ -385,8 +582,13 @@ public class ZorgApp {
 
 
     private void runSetLengte() {
-        System.out.println("Vul lengte van patient in meters (voorbeeld: 1.85):");
         profileIndex = profileChoice - 1;
+        if (englishLanguage == true) {
+            System.out.println("Input the length of the patient in meters (example 1.85)");
+        } else {
+            System.out.println("Vul lengte van patient in meters (voorbeeld: 1.85):");
+        }
+
         double lengte = getDoubleInput();
         profileList.get(profileIndex).setLengte(lengte);
     }
@@ -449,24 +651,48 @@ public class ZorgApp {
         Profile profile = profileList.get(profileIndex);
         MedicineList medicineList = profile.getMedicijnlijst();
 
-        System.out.println("Profiel:" + " " + profile.getVoornaam() + " " + profile.getAchternaam());
-        System.out.println("Medicijnvoorschrift:");
-        System.out.println("*****************************************************************************************************");
+        if (englishLanguage == true) {
+            System.out.println("Profile:" + " " + profile.getVoornaam() + " " + profile.getAchternaam());
+            System.out.println("Medicine prescription:");
+            System.out.println("+---------------------------------------------------------------------------------------------------+");
+        } else {
+            System.out.println("Profiel:" + " " + profile.getVoornaam() + " " + profile.getAchternaam());
+            System.out.println("Medicijnvoorschrift:");
+            System.out.println("+---------------------------------------------------------------------------------------------------+");
+        }
+
 
         for (int i = 0; i < profile.getMedicijnlijst().sizeOf(); i++) {
             System.out.println(medicineList.get(i).getNaam() + " " + medicineList.get(i).getMg() + "mg");
-            System.out.println("Beschrijving:" + " " + medicineList.get(i).getBeschrijving());
-            System.out.println("*****************************************************************************************************");
+
+            if (englishLanguage == true) {
+                System.out.println("Description:" + " " + medicineList.get(i).getBeschrijving());
+                System.out.println("+---------------------------------------------------------------------------------------------------+");
+            } else {
+                System.out.println("Beschrijving:" + " " + medicineList.get(i).getBeschrijving());
+                System.out.println("+---------------------------------------------------------------------------------------------------+");
+            }
         }
     }
 
     private void printMedichijnvoorschriftEditorMenu() {
-        System.out.println("\nMedicijnvoorschrift bewerken:");
-        System.out.println("1) Voeg een medicijn toe");
-        System.out.println("2) Bewerk medicijnhoeveelheid (mg)");
-        System.out.println("3) Verwijder een medicijn");
-        System.out.println("4) Ga terug naar patientenprofiel");
-        System.out.println("0) Zorgapp uitschakelen");
+        if (englishLanguage == true) {
+            System.out.println("\nEdit medicine prescription:");
+            System.out.println("1) Add a medicine");
+            System.out.println("2) Edit prescription amount of medicine in (mg)");
+            System.out.println("3) Delete a medicine from prescription");
+            System.out.println("+-----------------------------------------------------+");
+            System.out.println("4) Go back to patient profile");
+            System.out.println("0) Exit Zorgapp");
+        } else {
+            System.out.println("\nMedicijnvoorschrift bewerken:");
+            System.out.println("1) Voeg een medicijn toe");
+            System.out.println("2) Bewerk medicijnhoeveelheid (mg)");
+            System.out.println("3) Verwijder een medicijn vam medicijn voorschrift");
+            System.out.println("+-----------------------------------------------------+");
+            System.out.println("4) Ga terug naar patientenprofiel");
+            System.out.println("0) Zorgapp uitschakelen");
+        }
     }
 
     private int getMedicijnVoorschriftEditorMenuInput() {
@@ -474,11 +700,19 @@ public class ZorgApp {
         choice = -1;
         while (choice < 0 || choice > 4) {
             try {
-                System.out.println("\nKies een nummer uit de lijst: ");
+                if (englishLanguage == true) {
+                    System.out.println("\nChoose a number from the list");
+                } else {
+                    System.out.println("\nKies een nummer uit de lijst: ");
+                }
+
                 choice = Integer.parseInt(kb.nextLine());
 
             } catch (NumberFormatException e) {
-                System.out.println("Verkeerde invoer. Kies een nummer uit de lijst");
+                if (englishLanguage == true) {
+                    System.out.println("Wrong input, choose a number from the list");
+                }
+                System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
             }
         }
         return choice;
@@ -494,13 +728,24 @@ public class ZorgApp {
     }
 
     private void printMedicijnListMenu() {
-        System.out.println("Medicijnlijst:");
+        if (englishLanguage == true) {
+            System.out.println("Medicine list");
+        } else {
+            System.out.println("Medicijnlijst:");
+        }
+
 
         for (int i = 0; i < medicineList.sizeOf(); i++) {
             Medicine medicine = medicineList.get(i);
             System.out.println((i + 1) + ")" + " " + medicine.getNaam());
-            System.out.println("Beschrijving:" + " " + medicine.getBeschrijving() + " " + medicine.getBeschrijving());
-            System.out.println("*****************************************************************************************************");
+
+            if (englishLanguage == true) {
+                System.out.println("Description:" + " " + medicine.getBeschrijving() + " " + medicine.getBeschrijving());
+                System.out.println("+---------------------------------------------------------------------------------------------------+");
+            } else {
+                System.out.println("Beschrijving:" + " " + medicine.getBeschrijving() + " " + medicine.getBeschrijving());
+                System.out.println("+---------------------------------------------------------------------------------------------------+");
+            }
         }
 
     }
@@ -510,11 +755,20 @@ public class ZorgApp {
         choice = -1;
         while (choice < 1 || choice > medicineList.sizeOf()) {
             try {
-                System.out.println("\nVoer een medicijnnummer uit de lijst in om het medicijn aan de medicijnvoorschrift toe te voegen: ");
+                if (englishLanguage == true) {
+                    System.out.println("\nInput a medicine number from the list to add to the medicine prescription");
+                } else {
+                    System.out.println("\nVoer een medicijnnummer uit de lijst in om het medicijn aan de medicijnvoorschrift toe te voegen:");
+                }
+
                 choice = Integer.parseInt(kb.nextLine());
 
             } catch (NumberFormatException e) {
-                System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
+                if (englishLanguage == true) {
+                    System.out.println("Wrong input, choose a number from the list");
+                } else {
+                    System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
+                }
             }
         }
         return choice;
@@ -527,7 +781,12 @@ public class ZorgApp {
         Profile profile = profileList.get(profileIndex);
         Medicine medicine = medicineList.get(medicineIndex);
 
-        System.out.println("Voer mg van medicijn");
+        if (englishLanguage == true) {
+            System.out.println("Input the mg of the medicine");
+        } else {
+            System.out.println("Voer mg van medicijn in");
+        }
+
         int mg = getIntegerInput();
 
         medicine.setMg(mg);
@@ -550,14 +809,27 @@ public class ZorgApp {
         Profile profile = profileList.get(profileIndex);
         MedicineList medicineList = profile.getMedicijnlijst();
 
-        System.out.println("Profiel:" + " " + profile.getVoornaam() + " " + profile.getAchternaam());
-        System.out.println("Medicijnvoorschrift:");
-        System.out.println("*****************************************************************************************************");
+        if (englishLanguage == true) {
+            System.out.println("Profile:" + " " + profile.getVoornaam() + " " + profile.getAchternaam());
+            System.out.println("Medicine description:");
+            System.out.println("+---------------------------------------------------------------------------------------------------+");
+        } else {
+            System.out.println("Profiel:" + " " + profile.getVoornaam() + " " + profile.getAchternaam());
+            System.out.println("Medicijnvoorschrift:");
+            System.out.println("+---------------------------------------------------------------------------------------------------+");
+        }
+
 
         for (int i = 0; i < profile.getMedicijnlijst().sizeOf(); i++) {
             System.out.println((i + 1) + ")" + " " + medicineList.get(i).getNaam() + " " + medicineList.get(i).getMg() + "mg");
-            System.out.println("Beschrijving:" + " " + medicineList.get(i).getBeschrijving());
-            System.out.println("*****************************************************************************************************");
+
+            if (englishLanguage == true) {
+                System.out.println("Description:" + " " + medicineList.get(i).getBeschrijving());
+                System.out.println("+---------------------------------------------------------------------------------------------------+");
+            } else {
+                System.out.println("Beschrijving:" + " " + medicineList.get(i).getBeschrijving());
+                System.out.println("+---------------------------------------------------------------------------------------------------+");
+            }
         }
     }
 
@@ -567,11 +839,20 @@ public class ZorgApp {
         choice = -1;
         while (choice < 1 || choice > medicineList.sizeOf()) {
             try {
-                System.out.println("\nVoer een medicijnnummer om de hoeveelheid in 'mg' te bewerken; ");
+                if (englishLanguage == true) {
+                    System.out.println("\nInput a medicine number to edit the prescription amount in mg");
+                } else {
+                    System.out.println("\nVoer een medicijnnummer om de hoeveelheid in 'mg' te bewerken; ");
+                }
+
                 choice = Integer.parseInt(kb.nextLine());
 
             } catch (NumberFormatException e) {
-                System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
+                if (englishLanguage == true) {
+                    System.out.println("Wrong input, choose a number from the list");
+                } else {
+                    System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
+                }
             }
         }
         return choice;
@@ -585,7 +866,12 @@ public class ZorgApp {
 
         Profile profile = profileList.get(profileIndex);
 
-        System.out.println("Voer mg van medicijn in");
+        if (englishLanguage == true) {
+            System.out.println("Input the mg of the medicine");
+        } else {
+            System.out.println("Voer mg van medicijn in");
+        }
+
         int mg = getIntegerInput();
 
         profile.getMedicijnlijst().get(medicineIndex).setMg(mg);
@@ -615,11 +901,21 @@ public class ZorgApp {
         choice = -1;
         while (choice < 1 || choice > medicineList.sizeOf()) {
             try {
-                System.out.println("\nVoer een medicijnnummer in om deze te verwijderen; ");
+                if (englishLanguage == true) {
+                    System.out.println("\nInput a medicine number to delete this");
+                } else {
+                    System.out.println("\nVoer een medicijnnummer in om deze te verwijderen; ");
+                }
+
                 choice = Integer.parseInt(kb.nextLine());
 
             } catch (NumberFormatException e) {
-                System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
+
+                if (englishLanguage == true) {
+                    System.out.println("Wrong input, choose a number from the list");
+                } else {
+                    System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
+                }
             }
         }
         return choice;
@@ -667,11 +963,18 @@ public class ZorgApp {
     }
 
     private void printCareRecipientMenu() {
+        if (englishLanguage == true) {
+            System.out.println("\nLogin: Patient");
+            System.out.println("1) Input your first and last name:");
+            System.out.println("2) Go back");
+            System.out.println("0) Exit Zorgapp");
+        } else {
+            System.out.println("\nLogin: Patient");
+            System.out.println("1) Vul uw voor- en achternaam in:");
+            System.out.println("2) Ga terug");
+            System.out.println("0) Zorgapp uitschakelen");
+        }
 
-        System.out.println("\nGebruiker: Patient");
-        System.out.println("1) Vul uw voor- en achternaam in:");
-        System.out.println("2) Ga terug");
-        System.out.println("0) Zorgapp uitschakelen");
     }
 
 
@@ -693,19 +996,27 @@ public class ZorgApp {
 
 
     private String getCareRecipientVoornaamInput() {
-        System.out.println("Vul uw voornaam in");
+        if (englishLanguage == true) {
+            System.out.println("Input your first name: ");
+        } else {
+            System.out.println("Vul uw voornaam in: ");
+        }
 
         String input = getStringInput();
-        String capitalizedInput = input.substring(0, 1).toUpperCase() + input.substring(1);
+        String capitalizedInput = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
 
         return capitalizedInput;
     }
 
     private String getCareRecipientAchternaamInput() {
-        System.out.println("Vul uw achternaam in:");
+        if (englishLanguage == true) {
+            System.out.println("Input your last name: ");
+        } else {
+            System.out.println("Vul uw achternaam in: ");
+        }
 
         String input = getStringInput();
-        String capitalizedInput = input.substring(0, 1).toUpperCase() + input.substring(1);
+        String capitalizedInput = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
 
         return capitalizedInput;
     }
@@ -719,6 +1030,11 @@ public class ZorgApp {
                 runCareRecipientProfileMenu();
                 break;
             }
+//            else {
+//                System.out.println("gebruiker niet gevonden");
+//                runCareRecipientMenu();
+//            }
+
 //            else if (voornaam != profileList.get(i).getVoornaam() || achternaam != profileList.get(i).getAchternaam()) {
 //                System.out.println("gebruiker niet gevonden");
 
@@ -743,8 +1059,6 @@ public class ZorgApp {
 //            System.out.println(profile.getVoornaam() + " " + profile.getAchternaam());
 
         }
-        System.out.println("gebruiker niet gevonden");
-        runCareRecipientMenu();
     }
 
     private void runCareRecipientProfileMenu() throws IOException, InterruptedException {
@@ -763,9 +1077,15 @@ public class ZorgApp {
 
 
     private void printCareRecipientProfileMenu() {
-        System.out.println("\n1) Bewerk voornaam:");
-        System.out.println("2) Ga terug naar hoofdmenu");
-        System.out.println("0) Zorgapp uitschakelen");
+        if (englishLanguage == true) {
+            System.out.println("\n1) Edit first name");
+            System.out.println("2) Go back to main menu");
+            System.out.println("0) Exit ZorgApp");
+        } else {
+            System.out.println("\n1) Bewerk voornaam");
+            System.out.println("2) Ga terug naar hoofdmenu");
+            System.out.println("0) Zorgapp uitschakelen");
+        }
     }
 
     private int getCareRecipientProfileMenuInput() {
@@ -773,11 +1093,21 @@ public class ZorgApp {
         choice = -1;
         while (choice < 0 || choice > 2) {
             try {
-                System.out.println("\nKies een nummer uit de lijst: ");
+                if (englishLanguage == true) {
+                    System.out.println("\nChoose a number from the list: ");
+                } else {
+                    System.out.println("\nKies een nummer uit de lijst: ");
+                }
+
                 choice = Integer.parseInt(kb.nextLine());
 
             } catch (NumberFormatException e) {
-                System.out.println("Verkeerde invoer, kies een nummer uit de lijst:");
+                if (englishLanguage == true) {
+                    System.out.println("Wrong input, choose a number from the list");
+                } else {
+                    System.out.println("Verkeerde invoer, kies een nummer uit de lijst");
+                }
+
             }
         }
         return choice;
@@ -785,7 +1115,13 @@ public class ZorgApp {
 
     private void runSetVoornaamCareRecipient() {
         profileIndex = profileChoice - 1;
-        System.out.println("Vul een nieuwe voornaam in:");
+
+        if (englishLanguage == true) {
+            System.out.println("Input a new first name: ");
+        } else {
+            System.out.println("Vul een nieuwe voornaam in: ");
+        }
+
         String voornaam = getStringInput();
         profileList.get(profileIndex).setVoornaam(voornaam);
     }
@@ -805,10 +1141,12 @@ public class ZorgApp {
                 runMainMenu();
                 return false;
             }
-            default -> {unknownError(); return false;}
+            default -> {
+                unknownError();
+                return false;
+            }
         }
     }
-
 }
 
 
