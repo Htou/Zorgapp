@@ -10,7 +10,7 @@ public class DataHandler {
     public static ProfileList loadProfileList() throws IOException {
 
         Gson gson = new Gson();
-        Reader reader = new FileReader("src/main/java/com/company/ProfileData.json");
+        Reader reader = new FileReader(ZorgApp.profileDataPath);
 
         ProfileList profileList = gson.fromJson(reader, ProfileList.class);
 
@@ -22,7 +22,7 @@ public class DataHandler {
     public static MedicineList loadMedicineList() throws IOException {
 
         Gson gson = new Gson();
-        Reader reader = new FileReader("src/main/java/com/company/MedicineData.json");
+        Reader reader = new FileReader(ZorgApp.medicineDataPath);
 
         MedicineList medicineList = gson.fromJson(reader, MedicineList.class);
 
@@ -32,7 +32,7 @@ public class DataHandler {
     }
 
     public static void saveProfileList(ProfileList profileList) throws IOException {
-        Writer writer = new FileWriter("src/main/java/com/company/ProfileData.json");
+        Writer writer = new FileWriter(ZorgApp.profileDataPath);
         Gson gson = new Gson();
         // 1. Java object to JSON file
         gson.toJson(profileList, writer);

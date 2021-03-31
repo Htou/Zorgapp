@@ -6,6 +6,8 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class ZorgApp {
+    public static String profileDataPath, medicineDataPath;
+
     private ProfileList profileList;
     private MedicineList medicineList;
     private WeightEntry weightEntry;
@@ -20,7 +22,10 @@ public class ZorgApp {
     private int medicineIndex;
 
 
-    public ZorgApp() throws IOException {
+    public ZorgApp(String[] args) throws IOException {
+        profileDataPath = args[0];
+        medicineDataPath = args[1];
+
         profileList = DataHandler.loadProfileList();
         medicineList = DataHandler.loadMedicineList();
         weightEntry = new WeightEntry();
@@ -34,7 +39,7 @@ public class ZorgApp {
         englishLanguage = false;
     }
 
-    private void clearScreen() {
+    private static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
@@ -60,6 +65,7 @@ public class ZorgApp {
      * Choose language menu stack.
      */
     public void runLanguageMenu() throws IOException, InterruptedException {
+        clearScreen();
         printLanguageHeader();
         while (!exit) {
             printLanguageMenu();
@@ -120,6 +126,7 @@ public class ZorgApp {
      * Main Menu stack.
      */
     public void runMainMenu() throws IOException, InterruptedException {
+        clearScreen();
         printHeader();
         while (!exit) {
             printMainMenu();
@@ -197,6 +204,7 @@ public class ZorgApp {
      * Zorgverlener Menustack.
      */
     private void runZorgverlenerMenu() throws IOException, InterruptedException {
+        clearScreen();
         while (!exit) {
             printZorgverlenerMenu();
             choice = getMainMenuInput();
@@ -205,14 +213,13 @@ public class ZorgApp {
     }
 
     private void printZorgverlenerMenu() {
-        clearScreen();
         if (englishLanguage == true) {
-            System.out.println("\nUser: Caregiver");
+            System.out.println("User: Caregiver");
             System.out.println("1) Show patient list");
             System.out.println("2) Go back");
             System.out.println("0) Exit zorgapp");
         } else {
-            System.out.println("\nGebruiker: Zorgverlener");
+            System.out.println("Gebruiker: Zorgverlener");
             System.out.println("1) Geef patientenlijst weer");
             System.out.println("2) Ga terug");
             System.out.println("0) Zorgapp uitschakelen");
@@ -231,6 +238,7 @@ public class ZorgApp {
     }
 
     private void runPatientListMenu() throws IOException, InterruptedException {
+        clearScreen();
         while (!exit) {
             printPatientListMenu();
             profileChoice = getPatientListMenuInput();
@@ -239,7 +247,6 @@ public class ZorgApp {
     }
 
     private void printPatientListMenu() {
-        clearScreen();
         if (englishLanguage == true) {
             System.out.println("Patient list:");
         } else {
@@ -289,6 +296,7 @@ public class ZorgApp {
     }
 
     private void runPatientProfileMenu() throws IOException, InterruptedException {
+        clearScreen();
         while (!exit) {
             printPatientProfile();
             displayWeightGraph();
@@ -299,6 +307,7 @@ public class ZorgApp {
     }
 
     private void printPatientProfile() {
+
         int profileIndex = profileChoice - 1;
 
         Profile profile = profileList.get(profileIndex);
@@ -361,7 +370,7 @@ public class ZorgApp {
         Profile profile = profileList.get(profileIndex);
 
         if (englishLanguage == true) {
-            System.out.println("\nGraph: WeighHistory");
+            System.out.println("\nGraph: Weight 2History");
         } else {
             System.out.println("\nGrafiek: gewichtenlijst");
         }
@@ -425,6 +434,7 @@ public class ZorgApp {
     }
 
     private void runPatientProfileEditorMenu() throws IOException, InterruptedException {
+        clearScreen();
         while (!exit) {
             printPatientProfileEditorMenu();
             choice = getPatientProfileEditorMenuInput();
@@ -437,7 +447,7 @@ public class ZorgApp {
     }
 
     private void printPatientProfileEditorMenu() {
-        clearScreen();
+
         int profileIndex = profileChoice - 1;
 
         Profile profile = profileList.get(profileIndex);
@@ -524,9 +534,11 @@ public class ZorgApp {
 
 
     private void runSetVoornaam() {
+        clearScreen();
         profileIndex = profileChoice - 1;
 
-        if (englishLanguage = true) {
+        if (englishLanguage == true) {
+            clearScreen();
             System.out.println("Input the first name of the patient");
         } else {
             System.out.println("Vul voornaam van patient in:");
@@ -537,6 +549,7 @@ public class ZorgApp {
     }
 
     private void runSetActernaam() {
+        clearScreen();
         profileIndex = profileChoice - 1;
 
         if (englishLanguage == true) {
@@ -550,6 +563,7 @@ public class ZorgApp {
     }
 
     private void runSetLeeftijd() {
+        clearScreen();
         profileIndex = profileChoice - 1;
 
         if (englishLanguage == true) {
@@ -563,6 +577,7 @@ public class ZorgApp {
     }
 
     private void runAddGewicht() {
+        clearScreen();
         profileIndex = profileChoice - 1;
         Profile profile = profileList.get(profileIndex);
 
@@ -582,6 +597,7 @@ public class ZorgApp {
 
 
     private void runSetLengte() {
+        clearScreen();
         profileIndex = profileChoice - 1;
         if (englishLanguage == true) {
             System.out.println("Input the length of the patient in meters (example 1.85)");
@@ -632,6 +648,7 @@ public class ZorgApp {
     }
 
     private void runMedicijnVoorschriftEditorMenu() throws IOException, InterruptedException {
+        clearScreen();
         while (!exit) {
             printMedichijnVoorschriftList();
             printMedichijnvoorschriftEditorMenu();
@@ -719,6 +736,7 @@ public class ZorgApp {
     }
 
     private void runAddMedicijn() throws IOException, InterruptedException {
+        clearScreen();
         while (!exit) {
             printMedicijnListMenu();
             medicineChoice = getMedicijnListMenuInput();
@@ -782,9 +800,9 @@ public class ZorgApp {
         Medicine medicine = medicineList.get(medicineIndex);
 
         if (englishLanguage == true) {
-            System.out.println("Input the mg of the medicine");
+            System.out.println("\nInput the mg of the medicine");
         } else {
-            System.out.println("Voer mg van medicijn in");
+            System.out.println("\nVoer mg van medicijn in");
         }
 
         int mg = getIntegerInput();
@@ -795,6 +813,7 @@ public class ZorgApp {
 
 
     private void runEditMedicijnMg() throws IOException, InterruptedException {
+        clearScreen();
         while (!exit) {
             printMedicijnvoorschriftMenu();
             medicineChoice = getMedicijnListMenuMGInput();
@@ -879,6 +898,7 @@ public class ZorgApp {
 
 
     private void runRemoveMedicijn() throws IOException, InterruptedException {
+        clearScreen();
         while (!exit) {
             printMedicijnvoorschriftMenu();
             medicineChoice = getMedicijnListMenuRemoveInput();
@@ -955,6 +975,7 @@ public class ZorgApp {
      * Consumer Care Recipient menu stack.
      */
     private void runCareRecipientMenu() throws IOException, InterruptedException {
+        clearScreen();
         while (!exit) {
             printCareRecipientMenu();
             choice = getMainMenuInput();
@@ -988,6 +1009,7 @@ public class ZorgApp {
     }
 
     private void runProfileSearch() throws IOException, InterruptedException {
+        clearScreen();
         String voornaam = getCareRecipientVoornaamInput();
         String achternaam = getCareRecipientAchternaamInput();
         searchProfileOnName(voornaam, achternaam);
@@ -1023,17 +1045,24 @@ public class ZorgApp {
 
     // (Binary) search
     private void searchProfileOnName(String voornaam, String achternaam) throws IOException, InterruptedException {
-
+        boolean gebruikerGevonden = false;
         for (int i = 0; i < profileList.sizeOf(); i++) {
             if (voornaam.equals(profileList.get(i).getVoornaam()) && achternaam.equals(profileList.get(i).getAchternaam())) {
+                gebruikerGevonden = true;
                 profileChoice = i + 1;
                 runCareRecipientProfileMenu();
                 break;
             }
-//            else {
-//                System.out.println("gebruiker niet gevonden");
-//                runCareRecipientMenu();
-//            }
+        }
+
+        if (gebruikerGevonden == false) {
+            if (englishLanguage == true) {
+                System.out.println("Profile not found");
+            } else {
+                System.out.println("gebruiker niet gevonden");
+            }
+            runCareRecipientMenu();
+        }
 
 //            else if (voornaam != profileList.get(i).getVoornaam() || achternaam != profileList.get(i).getAchternaam()) {
 //                System.out.println("gebruiker niet gevonden");
@@ -1058,10 +1087,10 @@ public class ZorgApp {
 //
 //            System.out.println(profile.getVoornaam() + " " + profile.getAchternaam());
 
-        }
     }
 
     private void runCareRecipientProfileMenu() throws IOException, InterruptedException {
+        clearScreen();
         while (!exit) {
             printPatientProfile();
             displayWeightGraph();
@@ -1072,7 +1101,6 @@ public class ZorgApp {
                 DataHandler.saveProfileList(profileList);
             }
         }
-
     }
 
 
@@ -1114,6 +1142,7 @@ public class ZorgApp {
     }
 
     private void runSetVoornaamCareRecipient() {
+        clearScreen();
         profileIndex = profileChoice - 1;
 
         if (englishLanguage == true) {
