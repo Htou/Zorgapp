@@ -204,8 +204,8 @@ public class ZorgApp {
      * Zorgverlener Menustack.
      */
     private void runZorgverlenerMenu() throws IOException, InterruptedException {
-        clearScreen();
         while (!exit) {
+            clearScreen();
             printZorgverlenerMenu();
             choice = getMainMenuInput();
             preformZorgverlenerMenuAction();
@@ -296,8 +296,8 @@ public class ZorgApp {
     }
 
     private void runPatientProfileMenu() throws IOException, InterruptedException {
-        clearScreen();
         while (!exit) {
+            clearScreen();
             printPatientProfile();
             displayWeightGraph();
             printPatientProfileMenu();
@@ -434,8 +434,8 @@ public class ZorgApp {
     }
 
     private void runPatientProfileEditorMenu() throws IOException, InterruptedException {
-        clearScreen();
         while (!exit) {
+            clearScreen();
             printPatientProfileEditorMenu();
             choice = getPatientProfileEditorMenuInput();
             boolean dataWritten = preformPatientProfileEditorMenuAction();
@@ -648,8 +648,8 @@ public class ZorgApp {
     }
 
     private void runMedicijnVoorschriftEditorMenu() throws IOException, InterruptedException {
-        clearScreen();
         while (!exit) {
+            clearScreen();
             printMedichijnVoorschriftList();
             printMedichijnvoorschriftEditorMenu();
             choice = getMedicijnVoorschriftEditorMenuInput();
@@ -736,8 +736,8 @@ public class ZorgApp {
     }
 
     private void runAddMedicijn() throws IOException, InterruptedException {
-        clearScreen();
         while (!exit) {
+            clearScreen();
             printMedicijnListMenu();
             medicineChoice = getMedicijnListMenuInput();
             addMedicijnToProfile();
@@ -813,8 +813,8 @@ public class ZorgApp {
 
 
     private void runEditMedicijnMg() throws IOException, InterruptedException {
-        clearScreen();
         while (!exit) {
+            clearScreen();
             printMedicijnvoorschriftMenu();
             medicineChoice = getMedicijnListMenuMGInput();
             setMedicijnMgToMedicine();
@@ -898,8 +898,8 @@ public class ZorgApp {
 
 
     private void runRemoveMedicijn() throws IOException, InterruptedException {
-        clearScreen();
         while (!exit) {
+            clearScreen();
             printMedicijnvoorschriftMenu();
             medicineChoice = getMedicijnListMenuRemoveInput();
             removeMedicijnFromMedicine();
@@ -975,8 +975,8 @@ public class ZorgApp {
      * Consumer Care Recipient menu stack.
      */
     private void runCareRecipientMenu() throws IOException, InterruptedException {
-        clearScreen();
         while (!exit) {
+            clearScreen();
             printCareRecipientMenu();
             choice = getMainMenuInput();
             preformCareRecipientMenuAction();
@@ -1090,8 +1090,8 @@ public class ZorgApp {
     }
 
     private void runCareRecipientProfileMenu() throws IOException, InterruptedException {
-        clearScreen();
         while (!exit) {
+            clearScreen();
             printPatientProfile();
             displayWeightGraph();
             printCareRecipientProfileMenu();
