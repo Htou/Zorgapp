@@ -65,7 +65,6 @@ public class ZorgApp {
      * Choose language menu stack.
      */
     public void runLanguageMenu() throws IOException, InterruptedException {
-        clearScreen();
         printLanguageHeader();
         while (!exit) {
             printLanguageMenu();
@@ -75,6 +74,7 @@ public class ZorgApp {
     }
 
     private void printLanguageHeader() {
+        clearScreen();
         System.out.println("+------------------------------------------------+");
         System.out.println("|            Welkom bij  / Welcome to            |");
         System.out.println("|            de Zorgapp /  the Zorgapp           |");
